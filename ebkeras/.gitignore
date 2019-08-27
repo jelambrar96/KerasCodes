@@ -1,0 +1,10 @@
+# .gitignore
+
+# ZIP AND DATABASE FILES
+
+*.zip
+
+*APC*
+
+
+
