@@ -8,6 +8,7 @@ from .model3 import Model3
 from .model4 import Model4
 from .model5 import Model5
 from .model6 import Model6
+from .model7 import Model7
 
 
 class FactoryModel:
@@ -27,4 +28,6 @@ class FactoryModel:
             return Model5(*args, **kwarg)
         if typemode == 'MODEL6':
             return Model6(*args, **kwarg)
+        if typemode == 'MODEL7':
+            return Model7(*args, **kwarg)
         raise Exception('[ERROR] Invalid argument.')

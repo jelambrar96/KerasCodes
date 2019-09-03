@@ -10,4 +10,5 @@ output/
 output/*
 output*
 
-
+*out.txt
+*err.txt

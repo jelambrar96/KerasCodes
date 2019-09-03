@@ -22,6 +22,9 @@ class BasicModel:
         self._output_file = kwargs['output_file']
         self._plot_losses = PlotLosses(self._output_file)
 
+    def get_test_data_gen(self):
+        pass
+
     def load_input_data(self):
         pass
     
@@ -36,6 +39,9 @@ class BasicModel:
 
     def test(self):
         pass
+
+    def toJson(self):
+        return self._model.to_json()
 
     def train(self, training_generator, validator_generator, logfile, epochs=None, batch_size=None):
         if epochs == None:
@@ -54,8 +60,9 @@ class BasicModel:
     def save_weights(self, filename):
         self._model.save_weights(filename)
     
-    # def save_model_json(self, filename):
-    #     self._model.
+    def save_model_json(self, filename):
+        with open(filename, 'w') as json_file:
+            json_file.write(self._model.to_json())
     
     def summary(self, filename=''):
         if filename:

@@ -11,15 +11,15 @@ from ebdatagen.datagen import DataGenerator
 
 def main(argv, argc):
         
-    image_size = 32
+    image_size = 64
     image_height, image_width = (image_size, image_size)
     input_shape = (image_height, image_width)
 
-    MODEL = 'MODEL6'
+    MODEL_SELECTED = 'MODEL7'
 
-    str_time = time.strftime('%Y-%m-%d_%H:%M:%S')
+    str_time = time.strftime('%Y-%m-%d_%H-%M-%S')
     output_folder = 'output_' + str_time
-    if os.path.isdir(output_folder):
+    if not os.path.isdir(output_folder):
         print('creating_output_dir')
         os.makedirs(output_folder)
     # data folders
@@ -27,15 +27,15 @@ def main(argv, argc):
     print(os.path.basename(os.getcwd()))
     print(os.listdir())
 
-    training_dir = '../data/training/'
+    training_dir = '../data_small/training/'
     if not os.path.isdir(training_dir):
         raise Exception('ERROR: "' + training_dir + '" NO EXISTS')
     
-    validation_dir = '../data/validation/'
+    validation_dir = '../data_small/validation/'
     if not os.path.isdir(validation_dir):
         raise Exception('ERROR: "' + validation_dir + '" NO EXISTS')
     
-    test_dir = '../data/testing/'
+    test_dir = '../data_small/testing/'
     if not os.path.isdir(test_dir):
         raise Exception('ERROR: "' + test_dir + '" NO EXISTS')
     
@@ -48,7 +48,7 @@ def main(argv, argc):
 
     print('creating model')
     ebmodel = FactoryModel.getModel(
-        MODEL,
+        MODEL_SELECTED,
         input_shape=input_shape,
         epochs=epochs,
         learning_rate=0.001,
@@ -81,7 +81,7 @@ def main(argv, argc):
 
     print('testing..')
     testing_get = data_generator.getTestingGen()
-    probabilities = ebmodel.predict(testing_get, 30)
+    probabilities = ebmodel.predict(testing_get)
 
     for index, prob in enumerate(probabilities):
         print('--------------------------------------------------')
@@ -92,6 +92,9 @@ def main(argv, argc):
     print('saving summary')
     sumary_string = ebmodel.summary(
         os.path.join(output_folder, 'sumary_model.txt')
+    )
+    ebmodel.save_model_json(
+        os.path.join(output_folder, 'model.json')
     )
     print(sumary_string)
 
