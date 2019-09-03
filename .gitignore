@@ -139,4 +139,18 @@ MNIST_data/*
 *.jpg
 *.bmp
 
+data
+data/
+data/*
 
+data_small
+data_small/
+data_small/*
+
+APC*
+
+.vscode 
+.vscode/*
+
+.vscode 
+*.vscode/*

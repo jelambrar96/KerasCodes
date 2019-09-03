@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from basicmodel import BasicModel
 from keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Activation, Dropout, Flatten, Dense
+from keras.layers import Activation, Flatten, Dense
+
+from .basicmodel import BasicModel
 
 
-class Model4(BasicModel):
+class Model3(BasicModel):
 
     def __init__(self, *args, **kwargs):
-        super(BasicModel, self).__init__(args, kwargs)
+        super(Model3, self).__init__(*args, **kwargs)
 
         self._model.add(Conv2D(32, (3, 3), input_shape=self._input_shape))
         self._model.add(Activation('relu'))
@@ -23,9 +24,8 @@ class Model4(BasicModel):
         self._model.add(MaxPooling2D(pool_size=(2, 2)))
 
         self._model.add(Flatten())
-        self._model.add(Dense(128))
+        self._model.add(Dense(64))
         self._model.add(Activation('relu'))
-        self._model.add(Dropout(0.5))
         self._model.add(Dense(1))
         self._model.add(Activation('sigmoid'))
 

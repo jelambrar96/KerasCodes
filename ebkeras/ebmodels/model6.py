@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
-
-from basicmodel import BasicModel
+# import json
 
 from keras.optimizers import RMSprop
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 
+from .basicmodel import BasicModel
 
-class Model5(BasicModel):
+
+class Model6(BasicModel):
 
     def __init__(self, *args, **kwargs):
-        super(BasicModel, self).__init__(args, kwargs)
+
+        # print(json.dumps(kwargs, indent=2, sort_keys=True))
+        super(Model6, self).__init__(*args, **kwargs)
 
         self._model.add(Conv2D(32, 3, 3, border_mode='same',
                                input_shape=self._input_shape,
