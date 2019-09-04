@@ -22,6 +22,7 @@ def main(argv, argc):
     input_shape = (image_height, image_width)
 
     MODEL_SELECTED = 'MODEL7'
+    data_dir = '../data'
 
     str_time = time.strftime('%Y-%m-%d_%H-%M-%S')
     output_folder = 'output_' + str_time
@@ -33,15 +34,16 @@ def main(argv, argc):
     print(os.path.basename(os.getcwd()))
     print(os.listdir())
 
-    training_dir = '../data_small/training/'
+    training_dir = os.path.join(data_dir, 'training/')
+    # '../data_small/training/'
     if not os.path.isdir(training_dir):
         raise Exception('ERROR: "' + training_dir + '" NO EXISTS')
     
-    validation_dir = '../data_small/validation/'
+    validation_dir = os.path.join(data_dir, 'validation/')  # '../data_small/validation/'
     if not os.path.isdir(validation_dir):
         raise Exception('ERROR: "' + validation_dir + '" NO EXISTS')
     
-    test_dir = '../data_small/testing/'
+    test_dir = os.path.join(data_dir, 'testing/')  # '../data_small/testing/'
     if not os.path.isdir(test_dir):
         raise Exception('ERROR: "' + test_dir + '" NO EXISTS')
     

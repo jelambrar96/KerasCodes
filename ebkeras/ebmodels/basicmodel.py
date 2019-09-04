@@ -34,7 +34,9 @@ class BasicModel:
     def load_weights(self, file_weights):
         pass
 
-    def predict(self, test_generator, size):
+    def predict(self, test_generator, size=None):
+        if size == None:
+            return self._model.predict_generator(test_generator)
         return self._model.predict_generator(test_generator, size)
 
     def test(self):
