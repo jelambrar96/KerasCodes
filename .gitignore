@@ -154,3 +154,11 @@ APC*
 
 .vscode 
 *.vscode/*
+
+
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+

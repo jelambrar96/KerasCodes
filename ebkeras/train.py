@@ -3,11 +3,16 @@ import os
 import time
 import sys
 
-from ebmodels.factorymodel import FactoryModel
-from ebdatagen.datagen import DataGenerator
-
+import tensorflow as tf
 from keras import backend as K
 K.tensorflow_backend._get_available_gpus()
+
+config = tf.ConfigProto(device_count={'GPU':1, 'CPU':4})
+sess = tf.Session(config=config)
+K.set_session(sess)
+
+from ebmodels.factorymodel import FactoryModel
+from ebdatagen.datagen import DataGenerator
 
 
 def main(argv, argc):
@@ -52,11 +57,22 @@ def main(argv, argc):
         MODEL_SELECTED,
         input_shape=input_shape,
         epochs=epochs,
-        learning_rate=0.0001,
+        learning_rate=1e-5,
         class_mode='binary',
         batch_size=batch_size,
         output_file=os.path.join(output_folder, 'loss_vs_epochs.png')
         )
+
+    print('saving summary')
+    sumary_string = ebmodel.summary(
+        os.path.join(output_folder, 'sumary_model.txt')
+    )
+    print(sumary_string)
+
+    print('saving model')
+    ebmodel.save_model_json(
+        os.path.join(output_folder, 'model.json')
+    )
 
     print('creating image generator')
     data_generator = DataGenerator(
@@ -74,11 +90,12 @@ def main(argv, argc):
         os.path.join(output_folder, 'output_log.txt')
     )
 
-    print('saving model')
+    print('saving weights of training')
     
     ebmodel.save_weights(
-        os.path.join(output_folder, 'model_save' + str_time + '.txt')
+        os.path.join(output_folder, 'weights')
     )
+
 
     print('testing..')
     testing_get = data_generator.getTestingGen()
@@ -89,15 +106,6 @@ def main(argv, argc):
         print(testing_get.filenames[index])
         print('prob0: ', prob[0] * 100)
         print('prob0: ', (1 - prob[0]) * 100)
-
-    print('saving summary')
-    sumary_string = ebmodel.summary(
-        os.path.join(output_folder, 'sumary_model.txt')
-    )
-    ebmodel.save_model_json(
-        os.path.join(output_folder, 'model.json')
-    )
-    print(sumary_string)
 
     print('success')
 

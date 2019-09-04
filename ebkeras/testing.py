@@ -1,3 +1,5 @@
+# testing.py
+
 import os 
 import sys
 
@@ -13,8 +15,15 @@ from ebdatagen.basicgen import BasicGenerator
 def main(argv, argc):
     
     testing_dir = '../data/new_testing/'
-    file_weighst = '/home/ebenezerpdi/Jelambrar/Git/KerasCodes/ebkeras/output_2019-09-03_15-06-48/model_save2019-09-03_15-06-48.txt'
-    json_model_file = '/home/ebenezerpdi/Jelambrar/Git/KerasCodes/ebkeras/output_2019-09-03_15-06-48/model.json'
+
+    if argc < 2:
+        raise Exception('ERROR: No input_dir added')
+    else:
+        time_in = argv[1]
+        file_weighst = os.path.join(time_in, 'weights')
+        json_model_file = os.path.join(time_in, 'model.json')
+
+
     # file_weighst = 'https://github.com/jelambrar96/KerasCodes/blob/master/ebkeras/output_2019-09-03_15-06-48/model_save2019-09-03_15-06-48.txt'
 
     input_shape = (64, 64, 1)
