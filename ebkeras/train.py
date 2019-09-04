@@ -6,7 +6,8 @@ import sys
 from ebmodels.factorymodel import FactoryModel
 from ebdatagen.datagen import DataGenerator
 
-
+from keras import backend as K
+K.tensorflow_backend._get_available_gpus()
 
 
 def main(argv, argc):
@@ -39,7 +40,7 @@ def main(argv, argc):
     if not os.path.isdir(test_dir):
         raise Exception('ERROR: "' + test_dir + '" NO EXISTS')
     
-    epochs = 30
+    epochs = 64
     batch_size = 32
     test_size = 32
 
@@ -51,7 +52,7 @@ def main(argv, argc):
         MODEL_SELECTED,
         input_shape=input_shape,
         epochs=epochs,
-        learning_rate=0.001,
+        learning_rate=0.0001,
         class_mode='binary',
         batch_size=batch_size,
         output_file=os.path.join(output_folder, 'loss_vs_epochs.png')
