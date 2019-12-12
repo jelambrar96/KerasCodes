@@ -17,24 +17,24 @@ from ebdatagen.datagen import DataGenerator
 
 def main(argv, argc):
         
-    image_size = 64
+    image_size = 28
     image_height, image_width = (image_size, image_size)
     input_shape = (image_height, image_width)
 
-    MODEL_SELECTED = 'MODEL9'
+    MODEL_SELECTED = 'JSON'
 
     data_dir = '../new_data_small'
     if argc > 1:
         data_dir = argv[1]
+
+    if argc < 3:
+        raise Exception('NO JSON FILE INSERTED')
 
     str_time = time.strftime('%Y-%m-%d_%H-%M-%S')
     
     print(str_time)
     
     output_folder = 'output_' + str_time
-    if not os.path.isdir(output_folder):
-        print('creating_output_dir')
-        os.makedirs(output_folder)
     # data folders
 
     print(os.path.basename(os.getcwd()))
@@ -53,14 +53,14 @@ def main(argv, argc):
     if not os.path.isdir(test_dir):
         raise Exception('ERROR: "' + test_dir + '" NO EXISTS')
     
-    epochs = 64
+    epochs = 128
     batch_size = 8
     test_size = 32
 
     # one channel
-    input_shape = (image_height, image_width, 1)
+    input_shape = (image_height, image_width, 3)
 
-    learning_rate=1e-6
+    learning_rate=5e-6
     print("LR, ", learning_rate)
 
     print('creating model')
@@ -71,9 +71,17 @@ def main(argv, argc):
         learning_rate=learning_rate,
         class_mode='binary',
         batch_size=batch_size,
-        output_file=os.path.join(output_folder, 'loss_vs_epochs.png')
+        output_file=os.path.join(output_folder, 'loss_vs_epochs.png'),
+        json_file=sys.argv[2]
         )
+    
+    # ebmodel.load_model_from_json()
+    # exit()
 
+    if not os.path.isdir(output_folder):
+        print('creating_output_dir')
+        os.makedirs(output_folder)
+    
     print('saving summary')
     sumary_string = ebmodel.summary(
         os.path.join(output_folder, 'sumary_model.txt')

@@ -9,19 +9,19 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 from .basicmodel import BasicModel
 
 
-class Model7(BasicModel):
+class Model9(BasicModel):
 
     def __init__(self, *args, **kwargs):
 
         # print(json.dumps(kwargs, indent=2, sort_keys=True))
-        super(Model7, self).__init__(*args, **kwargs)
+        super(Model9, self).__init__(*args, **kwargs)
 
         self._model.add(
-            Conv2D(32, 3, 1, border_mode='same', input_shape=self._input_shape,
+            Conv2D(32, 5, 5, border_mode='same', input_shape=self._input_shape,
                    activation='relu')
             )
         self._model.add(
-            Conv2D(32, 3, 2, border_mode='same', activation='relu')
+            Conv2D(32, 3, 3, border_mode='same', activation='relu')
             )
         self._model.add(MaxPooling2D(pool_size=(2, 2)))
 
@@ -34,7 +34,7 @@ class Model7(BasicModel):
         self._model.add(MaxPooling2D(pool_size=(2, 2)))
 
         self._model.add(
-            Conv2D(64, 3, 3, border_mode='same', activation='relu')
+                Conv2D(64, 3, 3, border_mode='same', activation='relu')
             )
         self._model.add(
             Conv2D(64, 3, 3, border_mode='same', activation='relu')
@@ -65,7 +65,7 @@ class Model7(BasicModel):
         self._model.add(Dropout(0.5))
 
         self._model.add(Dense(1))
-        self._model.add(Activation('sigmoid'))
+        self._model.add(Activation('softmax'))
 
         """
         self._model.compile(loss='binary_crossentropy',
