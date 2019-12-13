@@ -26,7 +26,7 @@ class Model9(BasicModel):
         self._model.add(MaxPooling2D(pool_size=(2, 2)))
 
         self._model.add(
-            Conv2D(64, 3, 3, border_mode='same', activation='relu')
+            Conv2D(64, 5, 5, border_mode='same', activation='relu')
             )
         self._model.add(
             Conv2D(64, 3, 3, border_mode='same', activation='relu')

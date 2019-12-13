@@ -17,15 +17,21 @@ from ebdatagen.datagen import DataGenerator
 
 def main(argv, argc):
         
-    image_size = 64
+    image_size = 128
     image_height, image_width = (image_size, image_size)
     input_shape = (image_height, image_width)
 
-    MODEL_SELECTED = 'MODEL9'
+    MODEL_SELECTED = 'MODEL1'
 
     data_dir = '../new_data_small'
     if argc > 1:
         data_dir = argv[1]
+
+    init_weights = False
+    weights_file_init = ''
+    if argc > 3:
+        init_weights = True
+        weights_file_init = argv[3]
 
     str_time = time.strftime('%Y-%m-%d_%H-%M-%S')
     
@@ -53,14 +59,14 @@ def main(argv, argc):
     if not os.path.isdir(test_dir):
         raise Exception('ERROR: "' + test_dir + '" NO EXISTS')
     
-    epochs = 64
+    epochs = 64 * 7 
     batch_size = 8
     test_size = 32
 
     # one channel
     input_shape = (image_height, image_width, 1)
 
-    learning_rate=1e-6
+    learning_rate=3e-6
     print("LR, ", learning_rate)
 
     print('creating model')
@@ -73,6 +79,10 @@ def main(argv, argc):
         batch_size=batch_size,
         output_file=os.path.join(output_folder, 'loss_vs_epochs.png')
         )
+
+    if init_weights:
+        print('loading weiths from: ', weights_file_init)
+        ebmodel.load_weights(weights_file_init)
 
     print('saving summary')
     sumary_string = ebmodel.summary(

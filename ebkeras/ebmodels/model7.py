@@ -17,11 +17,11 @@ class Model7(BasicModel):
         super(Model7, self).__init__(*args, **kwargs)
 
         self._model.add(
-            Conv2D(32, 3, 1, border_mode='same', input_shape=self._input_shape,
+            Conv2D(32, 3, 3, border_mode='same', input_shape=self._input_shape,
                    activation='relu')
             )
         self._model.add(
-            Conv2D(32, 3, 2, border_mode='same', activation='relu')
+            Conv2D(32, 3, 3, border_mode='same', activation='relu')
             )
         self._model.add(MaxPooling2D(pool_size=(2, 2)))
 

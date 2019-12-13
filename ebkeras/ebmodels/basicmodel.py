@@ -71,7 +71,8 @@ class BasicModel:
             validation_data=validator_generator,
             validation_steps=len(validator_generator.filenames) // batch_size,
             callbacks=[self._plot_losses,
-                       CSVLogger(logfile, separator=';', append=False)]
+                       CSVLogger(logfile, separator=';', append=False)],
+            verbose=2
         )
 
     def save_weights(self, filename):

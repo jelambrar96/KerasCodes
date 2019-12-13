@@ -3,6 +3,7 @@
 
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
+from keras.optimizers import SGD
 
 from .basicmodel import BasicModel
 
@@ -30,5 +31,5 @@ class Model1(BasicModel):
         self._model.add(Activation("sigmoid"))
 
         self._model.compile(loss="binary_crossentropy",
-                            optimizer="rmsprop",
+                            optimizer=SGD(lr=self._learning_rate),
                             metrics=["accuracy"])
